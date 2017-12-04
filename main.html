@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+      <meta name="mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <meta name="theme-color" content="#2196f3">
+    <title>Mobile Courseware</title>
+    <!-- Path to Framework7 Library CSS-->
+      <link rel="stylesheet" href="lib/juploads/JQuery.JSAjaxFileUploader.css">
+    <link rel="stylesheet" href="css/framework7.material.min.css">
+    <link rel="stylesheet" href="css/framework7.material.colors.min.css">
+      <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+      <link rel="stylesheet" href="lib/toast/css/iziToast.min.css">
+  </head>
+  <body class="theme-indigo">
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <div class="panel panel-left panel-cover">
+
+    </div>
+
+    <!-- Views-->
+    <div class="views">
+      <!-- Your main view, should have "view-main" class-->
+      <div class="view view-main">
+        <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
+        <div class="pages navbar-fixed">
+          <!-- Page, data-page contains page name-->
+
+            <div class="page" data-page="main-page-2">
+
+
+                  <!--splash sceen-->
+                  <div class="page-content splash-screen center hide" style="color: #FE0000; padding-top:0px;" id="splash-page">
+
+                  </div>
+                  <!--splash scree-->
+
+                <!--login screen-->
+
+                <div class="page-content login-screen-content" id="main-pages">
+                    <div class="login-screen-title" style="padding: 10px;">Mobile Courseware</div>
+
+                    <div class="content-block">
+                        <p style="text-align:center; font-weight:bold;">Account Login</p>
+                    </div>
+
+                    <div class="content-block">
+                        <div class="content-block-inner">
+                            <div class="row">
+                                <div class="col-50">
+                                    <a href="" class="button button-raised button-fill act-btn" data-class="std-page">Student</a>
+                                </div>
+                                <div class="col-50">
+                                    <a href="" class="button button-raised act-btn" data-class="stf-page">Staff</a>
+                                </div>
+                            </div>
+
+                            <div class="std-page log-page">
+                                <h4>Student Login</h4>
+
+                                <form action="" method="post" role="form" id="stu-login-form">
+                                    <div class="list-block inputs-list">
+                                        <ul>
+                                            <li class="item-content">
+                                                <div class="item-inner">
+                                                    <div class="item-title label">Matric No</div>
+                                                    <div class="item-input">
+                                                        <input type="text" autocomplete="off" required="" name="login_matric" id="login_matric" placeholder="Matric No"/>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="item-content">
+                                                <div class="item-inner">
+                                                    <div class="item-title label">Password</div>
+                                                    <div class="item-input">
+                                                        <input type="password" required="" name="login_password" id="login_password" placeholder="Password"/>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+
+                                        </ul>
+                                    </div>
+                                    <div class="content-block">
+                                        <input type="submit" name="login_ok" class="button button-fill button-raised" value="Login">
+                                    </div>
+
+                                    <div class="content-block">
+                                        <a href="stu_register.html" class="button">Create Account</a>
+
+                                        <a href="stu_password.html" class="button">Forgot Password</a>
+                                    </div>
+
+                                    <a href="stu_home.html" class="hide" id="home">Home</a>
+                                </form>
+                            </div>
+
+                            <div class="stf-page hide log-page">
+                                <h4>Staff Login</h4>
+
+                                <form action="" method="post" role="form" id="staff-login-form">
+                                    <div class="list-block inputs-list">
+                                        <ul>
+                                            <li class="item-content">
+                                                <div class="item-inner">
+                                                    <div class="item-title label">Staff Id</div>
+                                                    <div class="item-input">
+                                                        <input type="text" autocomplete="off" required="" name="staff_id" id="staff_id" placeholder="Staff Id"/>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="item-content">
+                                                <div class="item-inner">
+                                                    <div class="item-title label">Password</div>
+                                                    <div class="item-input">
+                                                        <input type="password" required="" name="staff_password" id="staff_password" placeholder="Password"/>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+
+                                        </ul>
+                                    </div>
+                                    <div class="content-block">
+                                        <input type="submit" name="login_ok" class="button button-fill button-raised" value="Login">
+                                    </div>
+
+                                    <div class="content-block">
+                                        <a href="staff-register.html" class="button">Create Account</a>
+
+                                        <a href="staff-password.html" class="button">Forgot Password</a>
+                                    </div>
+
+                                    <a href="staff-home.html" class="hide" id="staff-home">Home</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!--login screen-->
+
+            </div>
+
+
+
+        </div>
+        <!-- Bottom Toolbar-->
+
+      </div>
+    </div>
+    <!--jquery-->
+
+
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="js/framework7.min.js"></script>
+
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="lib/toast/js/iziToast.min.js"></script>
+    <script type="text/javascript" src="js/settings.js"></script>
+    <script type="text/javascript" src="js/my-app.js"></script>
+    <script type="text/javascript" src="lib/juploads/JQuery.JSAjaxFileUploader.min.js" ></script>
+
+    <!--<script type="text/javascript" src="cordova.js"></script>-->
+    <!--<script type="text/javascript" src="cordova_plugins.js"></script>-->
+
+
+  </body>
+</html>

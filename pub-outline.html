@@ -1,0 +1,80 @@
+<div data-page="staff-pub-outline" class="page">
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <div class="navbar navbar-fixed">
+        <div class="navbar-inner">
+            <div class="left">
+                <a href="index.html" class="back link icon-only">
+                    <i class="icon icon-back"></i>
+                </a>
+            </div>
+            <div class="center">Publish Course Outline</div>
+            <div class="right"><a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a></div>
+        </div>
+    </div>
+    <div class="page-content">
+        <p class="center"><strong>Welcome <span class="staff-name"></span></strong></p>
+
+        <div id="upload-form"></div>
+        <form action="" method="post" role="form" id="staff-pub-form">
+            <div class="list-block inputs-list">
+                <ul>
+                    <li class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">Course Code</div>
+                            <div class="item-input">
+                                <input type="text" required="" name="ccode" id="ccode" placeholder="Course Code"/>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">Course Title</div>
+                            <div class="item-input">
+                                <input type="text" required="" name="ctitle" id="ctitle" placeholder="Course Title"/>
+                                <input type="hidden" name="material" id="material">
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <!-- Additional "smart-select" class -->
+                        <a href="#" class="item-link smart-select">
+                            <!-- select -->
+                            <select name="c_level" class="smart_2">
+                                <option value="ND 1">ND 1</option>
+                                <option value="ND 2">ND 2</option>
+                                <option value="PT YR 1">PT YR 1</option>
+                                <option value="PT YR 2">PT YR 2</option>
+                                <option value="PT YR 3">PT YR 3</option>
+                                <option value="HND 1">HND 1</option>
+                                <option value="HND 2">HND 2</option>
+                            </select>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <!-- Select label -->
+                                    <div class="item-title">Level</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content-block">
+                <em>Make sure the outline is uploaded before submitting the form</em>
+                <input type="submit" name="sub-mat" class="button button-fill button-raised" value="Submit" disabled>
+                <input type="reset" class="hide res">
+            </div>
+
+            <div class="content-block">
+                <div class="list-block-label"><b>Supervised By:</b><br><span class="supervisor hide">Mr. Ramoni T.A</span></div>
+            </div>
+        </form>
+
+        <p class="center hide">
+            <strong>&copy; Computer Sc. Dept. Fed; Poly Ede.</strong>
+        </p>
+    </div>
+</div>
+</div>
