@@ -375,9 +375,10 @@ myApp.onPageInit('view-staff-material',function () {
         }
     });
 
-    $("html").on('click','.dl',function (e) {
+    $$("body").on('click','.dl',function (e) {
         e.preventDefault();
         var f = $(this).attr("data-link");
+        myApp.alert(f);
         openBrowser(f);
     });
 });
