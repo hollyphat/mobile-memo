@@ -378,8 +378,9 @@ myApp.onPageInit('view-staff-material',function () {
     $$("body").on('click','.dl',function (e) {
         e.preventDefault();
         var f = $(this).attr("data-link");
-        myApp.alert(f);
-        openBrowser(f);
+        //myApp.alert(f);
+        //openBrowser(f);
+        downloadFile(f);
     });
 });
 
@@ -431,10 +432,12 @@ myApp.onPageInit('view-staff-outline',function () {
         }
     });
 
-    $("html").on('click','.dl',function (e) {
+    $$("body").on('click','.dl',function (e) {
         e.preventDefault();
         var f = $(this).attr("data-link");
-        openBrowser(f);
+        //myApp.alert(f);
+        //openBrowser(f);
+        downloadFile(f);
     });
 });
 
@@ -506,7 +509,7 @@ function staff_login() {
 }
 
 
-/*function downloadFile(fname) {
+function downloadFile(fname) {
     show_toast("File downloading...","yellow");
     myApp.showIndicator();
     var fileTransfer = new FileTransfer();
@@ -532,7 +535,7 @@ function staff_login() {
             }
         }
     );
-}*/
+}
 
 function openBrowser(fname) {
     var d_url = base_url+"/upload/"+fname;
