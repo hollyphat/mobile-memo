@@ -3,23 +3,8 @@
     src: url('../fonts/WorkSans-Regular.otf') format("opentype");
 }
 
-@font-face {
-    font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-Regular.ttf') format("opentype");
-}
-
-@font-face {
-    font-family: 'Ubuntu';
-    src: url('../fonts/Ubuntu.ttf') format("opentype");
-}
-
-@font-face {
-    font-family: 'digit';
-    src: url('../fonts/DS-DIGIT.ttf') format("opentype");
-}
-
 html,body{
-    font-family: 'Ubuntu';
+    font-family: 'work-sans';
 }
 
 input::-webkit-outer-spin-button,
@@ -52,7 +37,7 @@ input::-webkit-inner-spin-button {
 }
 
 .img-icon{
-    background-color: #FE0000;
+    background-color: indigo;
     color: #fff;
     height: 32px;
     width: 32px;
@@ -86,4 +71,25 @@ input::-webkit-inner-spin-button {
 .time-section span{
     font-family: digit;
     font-size: 24px;
+}
+
+#splash-text{
+    position: fixed;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+}
+
+.splash-screen{
+    border: indigo solid 1px;
+    /*margin-top: 4px;
+    margin-left:4px;
+    margin-right:4px;
+    margin-bottom:0px;*/
+    margin-left:4px;
+    margin-right:4px;
 }
