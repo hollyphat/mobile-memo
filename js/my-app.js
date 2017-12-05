@@ -20,6 +20,39 @@ myApp.onPageInit('main-page-2', function (page) {
     //var s_id = sessionStorage.getItem("staff_id");
     if(staff_login()){
         $$("#staff-home").click();
+    }else if(student_login()){
+        $$("#home").click();
+    }
+
+    var ft = sessionStorage.getItem("ft");
+    //console.log(ft);
+    if((ft == null) || (ft == "")){
+        //show splash
+        sessionStorage.setItem("ft",1);
+        document.getElementById('splash-page').style.display = "block";
+
+        setTimeout(function(){
+                show_main()
+            },
+            5000);
+    }else{
+        //show main
+        show_main();
+    }
+
+    //show_main();
+
+
+    function show_main()
+    {
+        //console.log("hello");
+        document.getElementById('splash-page').innerHTML = "";
+        document.getElementById('splash-page').style.display = "none";
+        $$("#splash-page").remove();
+        $$("#main-page").removeClass('hide');
+        //document.getElementById('main-page').style.display = "block";
+
+        //myApp.onPageInit('index');
     }
     //console.log("hello");
     // run createContentPage func after link was clicked
@@ -71,6 +104,48 @@ myApp.onPageInit('main-page-2', function (page) {
                console.log(e.responseText);
            }
        });
+    });
+
+    //stu-login-form
+
+    $$("#stu-login-form").on('submit',function (e) {
+        e.preventDefault();
+        myApp.showIndicator();
+
+        $$.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            cache: 'false',
+            crossDomain: true,
+            timeout: 60000,
+            data: {
+                'student-login': '',
+                'matric' : $$("#login_matric").val(),
+                'password': $$("#login_password").val()
+            },
+            success: function (f) {
+                myApp.hideIndicator();
+                var ok = f.ok;
+                if(ok == 0){
+                    show_toast("Invalid login details","red");
+                }else if(ok == 1){
+                    //save the records
+                    sessionStorage.setItem("matric",f.rec['matric']);
+                    sessionStorage.setItem("student_email",f.rec['email']);
+                    sessionStorage.setItem("student_sname",f.rec['sname']);
+                    sessionStorage.setItem("student_oname",f.rec['oname']);
+                    sessionStorage.setItem("student_level",f.rec['level']);
+
+                    $$("#home").click();
+                }
+            },
+            error: function (e) {
+                myApp.hideIndicator();
+                myApp.alert("Network error","Error");
+                console.log(e.responseText);
+            }
+        });
     });
 }).trigger();
 //act-btn
@@ -129,11 +204,92 @@ myApp.onPageInit('staff-reg',function () {
     });
 });
 
+
+myApp.onPageInit('student-reg',function () {
+    //console.log("Hello");
+    $$("#register-form").on("submit",function (e) {
+        e.preventDefault();
+        myApp.showPreloader("Signing up...");
+        var matric = $$("#reg_matric").val();
+
+        //console.log(staff_id);
+        var sname = $$("#sname").val();
+        var oname = $$("#onames").val();
+        var level;
+        $$('select[name="student_level"] option:checked').each(function () {
+            level = this.value;
+        });
+        var email = $$("#reg_email").val();
+        var password = $$("#reg_password").val();
+
+        $$.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            data: {
+                'matric': matric,
+                'sname': sname,
+                'oname': oname,
+                'level': level,
+                'email': email,
+                'password': password,
+                'student-reg': ''
+            },
+            success:function (f) {
+                myApp.hidePreloader();
+                console.log(f);
+                var ok = f.ok;
+
+                if(ok == 1){
+                    $$(".res").click();
+                    show_toast(f.msg,"green");
+                }else{
+                    show_toast(f.msg,"red");
+                }
+            },
+            error:function (e) {
+                myApp.hidePreloader();
+                myApp.alert("Network, try again","Error");
+            },
+            timeout: 60000,
+            crossDomain: true,
+            cache: false
+        });
+        //show_toast("Registration complete","blue");
+    });
+});
+
 myApp.onPageInit('staff-home',function () {
     if(!staff_login()){
         window.location = "main.html";
     }
     update_staff();
+
+    $$(".staff-logout").on("click",function (e) {
+       e.preventDefault();
+
+       myApp.confirm("Are you sure want to logout","Logout",function (e) {
+          sessionStorage.clear();
+          window.location = "main.html";
+       });
+    });
+});
+
+
+myApp.onPageInit('student-home',function () {
+    if(!student_login()){
+        window.location = "main.html";
+    }
+    update_student();
+
+    $$(".staff-logout").on("click",function (e) {
+        e.preventDefault();
+
+        myApp.confirm("Are you sure want to logout","Logout",function (e) {
+            sessionStorage.clear();
+            window.location = "main.html";
+        });
+    });
 });
 
 myApp.onPageInit('staff-pub-course',function () {
@@ -326,6 +482,7 @@ myApp.onPageInit('staff-pub-assign',function () {
     });
 });
 
+//STAFF COURSE MATERIAL
 myApp.onPageInit('view-staff-material',function () {
     if(!staff_login()){
         window.location = "main.html";
@@ -387,6 +544,70 @@ myApp.onPageInit('view-staff-material',function () {
     });
 });
 
+//STUDENT COURSE MATERIAL
+
+myApp.onPageInit('view-student-material',function () {
+    if(!student_login()){
+        window.location = "main.html";
+    }
+    update_student();
+
+    myApp.showIndicator();
+
+    $$.ajax({
+        url: url,
+        type: 'get',
+        dataType: 'json',
+        data:{
+            'load-student-mat': sessionStorage.getItem("student_level")
+        },
+        cache: true,
+        crossDomain: true,
+        timeout: 60000,
+        success:function (f) {
+            var t = f.total;
+            //console.log(f.records[0].ctitle);
+            if(t== 0){
+                show_toast("No course material for your level","red");
+            }else{
+                var html = "";
+                var rec = f.records;
+                for(var i = 0; i < rec.length; i++){
+                    var tr = "<tr>";
+                    tr += "<td>"+rec[i].ccode+"</td>";
+                    tr += "<td>"+rec[i].ctitle+"</td>";
+                    tr += "<td>"+rec[i].name+"</td>";
+                    tr += "<td>"+rec[i].staff+"</td>";
+                    tr += "<td>"+rec[i].date_added+"</td>";
+                    tr += "<td><a href='#' class='button button-raised dl' data-link='"+rec[i].material+"'><i class='fa fa-download'></i></a> </td>";
+                    tr += "</tr>";
+                    html += tr;
+                }
+
+            }
+            myApp.hideIndicator();
+
+            $$("#tmat").html(html)
+        },
+        error: function (e) {
+            myApp.hideIndicator();
+            myApp.alert("<span style='color: #fd0023;'>Network error...</span>","Fetch Error");
+        }
+    });
+
+    $$("body").on('click','.dl',function (e) {
+        e.preventDefault();
+        var f = $(this).attr("data-link");
+        //myApp.alert(f);
+        //openBrowser(f);
+        var file_url = base_url+"upload/"+f;
+        //DownloadFile(file_url, "mobile_course", f);
+        //myApp.alert(file_url);
+        window.open(file_url);
+    });
+});
+
+
 myApp.onPageInit('view-staff-outline',function () {
     if(!staff_login()){
         window.location = "main.html";
@@ -425,6 +646,67 @@ myApp.onPageInit('view-staff-outline',function () {
                 }
 
             }
+
+
+            $$("#tmat").html(html)
+            myApp.hideIndicator();
+        },
+        error: function (e) {
+            myApp.hideIndicator();
+            myApp.alert("<span style='color: #fd0023;'>Network error...</span>","Fetch Error");
+        }
+    });
+
+    $$("body").on('click','.dl',function (e) {
+        e.preventDefault();
+        var f = $(this).attr("data-link");
+        //myApp.alert(f);
+        //openBrowser(f);
+        var file_url = base_url+"upload/"+f;
+        //myApp.alert(file_url);
+        window.open(file_url);
+        //DownloadFile(file_url, "mobile_course", f);
+    });
+});
+
+
+myApp.onPageInit('view-student-outline',function () {
+    if(!student_login()){
+        window.location = "main.html";
+    }
+    update_student();
+
+    myApp.showIndicator();
+
+    $$.ajax({
+        url: url,
+        type: 'get',
+        dataType: 'json',
+        data:{
+            'load-student-out': sessionStorage.getItem("student_level")
+        },
+        cache: true,
+        crossDomain: true,
+        timeout: 60000,
+        success:function (f) {
+            var t = f.total;
+            //console.log(f.records[0].ctitle);
+            if(t== 0){
+                show_toast("No course outline for your level","red");
+            }else{
+                var html = "";
+                var rec = f.records;
+                for(var i = 0; i < rec.length; i++){
+                    var tr = "<tr>";
+                    tr += "<td>"+rec[i].ccode+"</td>";
+                    tr += "<td>"+rec[i].ctitle+"</td>";
+                    tr += "<td>"+rec[i].date_added+"</td>";
+                    tr += "<td><a href='#' class='button button-raised dl' data-link='"+rec[i].material+"'><i class='fa fa-download'></i></a> </td>";
+                    tr += "</tr>";
+                    html += tr;
+                }
+
+            }
             myApp.hideIndicator();
 
             $$("#tmat").html(html)
@@ -446,6 +728,7 @@ myApp.onPageInit('view-staff-outline',function () {
         //DownloadFile(file_url, "mobile_course", f);
     });
 });
+
 
 myApp.onPageInit('view-staff-assign',function () {
     if(!staff_login()){
@@ -482,7 +765,7 @@ myApp.onPageInit('view-staff-assign',function () {
                     tr += "<td>"+rec[i].date_added+"</td>";
                     tr += "<td>"+rec[i].sub_date+"</td>";
                     tr += "<td>"+rec[i].counts+"</td>";
-                    tr += "<td><a href='#' class='dl2' data-id='"+rec[i].id+"'>View</a> </td>";
+                    tr += "<td><a href='staff-assign-submit.html' class='button button-raised dl2' data-id='"+rec[i].id+"'>View</a> </td>";
                     tr += "</tr>";
                     html += tr;
                 }
@@ -498,8 +781,236 @@ myApp.onPageInit('view-staff-assign',function () {
             myApp.alert("<span style='color: #fd0023;'>Network error...</span>","Fetch Error");
         }
     });
+
+    $$("body").on("click",".dl2",function (e) {
+        var the_id = $$(this).attr("data-id");
+        sessionStorage.setItem("assign_id",the_id);
+    });
 });
 
+myApp.onPageInit('view-student-assign',function () {
+    if(!student_login()){
+        window.location = "main.html";
+    }
+    update_student();
+
+    myApp.showIndicator();
+
+    $$.ajax({
+        url: url,
+        type: 'get',
+        dataType: 'json',
+        data:{
+            'load-student-assign': '',
+            'level': sessionStorage.getItem("student_level")
+        },
+        cache: true,
+        crossDomain: true,
+        timeout: 60000,
+        success:function (f) {
+            var t = f.total;
+            //console.log(f.records[0].ctitle);
+            if(t== 0){
+                show_toast("No assignment for your level","red");
+            }else{
+                var html = "";
+                var rec = f.records;
+                for(var i = 0; i < rec.length; i++){
+                    var tr = "<tr>";
+                    tr += "<td>"+rec[i].ccode+"</td>";
+                    tr += "<td>"+rec[i].ctitle+"</td>";
+                    tr += "<td>"+rec[i].staff+"</td>";
+                    tr += "<td>"+rec[i].date_added+"</td>";
+                    tr += "<td>"+rec[i].sub_date+"</td>";
+                    tr += "<td><a href='student-assign-submit.html' class='button button-raised dl2' data-id='"+rec[i].id+"'>View</a> </td>";
+                    tr += "</tr>";
+                    html += tr;
+                }
+
+            }
+            myApp.hideIndicator();
+
+            $$("#tmat").html(html)
+        },
+        error: function (e) {
+            myApp.hideIndicator();
+            console.log(e.responseText);
+            myApp.alert("<span style='color: #fd0023;'>Network error...</span>","Fetch Error");
+        }
+    });
+
+    $$("body").on("click",".dl2",function (e) {
+        var the_id = $$(this).attr("data-id");
+        sessionStorage.setItem("assign_id",the_id);
+    });
+});
+
+myApp.onPageInit('student-assign-submit',function () {
+   if(!student_login()){
+       window.location = "main.html";
+   }
+
+   update_student();
+    var assign_id = sessionStorage.getItem("assign_id");
+    var assignment_link = "";
+   myApp.showIndicator();
+
+   $$.ajax({
+      url: url,
+      type: 'post',
+      dataType: 'json',
+      timeout: 60000,
+      data:{
+          'view-ass-details': '',
+          'assign_id': assign_id
+      },
+       cache: true,
+       crossDomain: true,
+       success:function (f) {
+           $$("#ccode").html(f.ccode);
+           $$("#ctitle").html(f.ctitle);
+           $$("#level").html(f.level);
+           $$("#staff").html(f.staff);
+           $$("#up-date").html(f.date_added);
+           $$("#deadline").html(f.submit_date);
+           assignment_link = base_url+"upload/"+f.assignment;
+           myApp.hideIndicator();
+           $$(".main-p").removeClass('hide');
+       },
+       error: function (e) {
+           myApp.alert("Network error","Error");
+           console.log(e.responseText);
+       }
+   });
+
+
+
+    $('#upload-form').JSAjaxFileUploader({
+        uploadUrl: base_url+'/upload.php',
+        formData:{
+            assignment_id: sessionStorage.getItem("assign_id"),
+            matric: sessionStorage.getItem("matric"),
+            submit_assignment: ''
+        },
+        autoSubmit: false,
+        inputText: "Select File",
+        uploadTest: "Submit Assignment",
+        maxFileSize:2048000,	//Max 500 KB file
+        allowExt: 'doc|docx|pdf',	//allowing only images for upload,
+        success:function(f){
+            console.log(f);
+            myApp.alert("Assignment submitted successfully");
+            show_toast("Assignment submitted successfully","green");
+            //$$("[name=sub-mat]").removeAttr("disabled");
+            //$$("#material").val(f);
+        }
+    });
+
+    $$(".dl").on("click",function (e) {
+        e.preventDefault();
+        window.open(assignment_link);
+    });
+
+
+});
+
+
+myApp.onPageInit('profile',function () {
+   if(staff_login()){
+       update_staff();
+       $$(".staff_id").html(sessionStorage.getItem("staff_id"));
+       $$(".ssname").html(sessionStorage.getItem("staff_sname"));
+       $$(".soname").html(sessionStorage.getItem("staff_oname"));
+       $$(".semail").html(sessionStorage.getItem("staff_email"));
+       $$(".slevel").html(sessionStorage.getItem("staff_level"));
+       $$(".staff-page").removeClass('hide');
+   } else if(student_login()){
+       update_student();
+
+       $$(".matric").html(sessionStorage.getItem("matric"));
+       $$(".sname").html(sessionStorage.getItem("student_sname"));
+       $$(".oname").html(sessionStorage.getItem("student_oname"));
+       $$(".email").html(sessionStorage.getItem("student_email"));
+       $$(".level").html(sessionStorage.getItem("student_level"));
+       $$(".student-page").removeClass('hide');
+   }else{
+       window.location = "main.html";
+   }
+});
+
+myApp.onPageInit('staff-submitted-assign',function () {
+   if(!staff_login()){
+       window.location = "main.html";
+   }
+
+   update_staff();
+
+    var assign_id = sessionStorage.getItem("assign_id");
+    var assignment_link = "";
+    myApp.showIndicator();
+
+    $$.ajax({
+        url: url,
+        type: 'post',
+        dataType: 'json',
+        timeout: 60000,
+        data:{
+            'view-ass-details': '',
+            'assign_id': assign_id,
+            'is_staff': ''
+        },
+        cache: true,
+        crossDomain: true,
+        success:function (f) {
+            console.log(f);
+            $$("#ccode").html(f.ccode);
+            $$("#ctitle").html(f.ctitle);
+            $$("#level").html(f.level);
+            $$("#staff").html(f.staff);
+            $$("#up-date").html(f.date_added);
+            $$("#deadline").html(f.submit_date);
+            assignment_link = base_url+"upload/"+f.assignment;
+
+
+            var html = "";
+            var rec = f.records;
+            for(var i = 0; i < rec.length; i++){
+                var tr = "<tr>";
+                tr += "<td>"+rec[i].matric+"</td>";
+                tr += "<td>"+rec[i].name+"</td>";
+                tr += "<td>"+rec[i].date_submitted+"</td>";
+                tr += "<td><a href='#' class='button button-raised dl2' data-link='"+rec[i].material+"'><i class='fa fa-download'></i></a> </td>";
+                tr += "</tr>";
+                html += tr;
+            }
+
+            $$(".tmat").html(html);
+
+            myApp.hideIndicator();
+            $$(".main-p").removeClass('hide');
+        },
+        error: function (e) {
+            myApp.alert("Network error","Error");
+            console.log(e.responseText);
+        }
+    });
+
+    $$(".dl").on("click",function (e) {
+        e.preventDefault();
+        window.open(assignment_link);
+    });
+
+    $$("body").on('click','.dl2',function (e) {
+        e.preventDefault();
+        var f = $(this).attr("data-link");
+        //myApp.alert(f);
+        //openBrowser(f);
+        var file_url = base_url+"upload/"+f;
+        //DownloadFile(file_url, "mobile_course", f);
+        //myApp.alert(file_url);
+        window.open(file_url);
+    });
+});
 function update_staff() {
     var f_name = sessionStorage.getItem("staff_sname")+" "+sessionStorage.getItem("staff_oname");
     $$(".staff-name").html(f_name);
@@ -514,59 +1025,16 @@ function staff_login() {
     }
 }
 
-
-function downloadFiles(fname) {
-    show_toast("File downloading...","yellow");
-    myApp.showIndicator();
-    var fileTransfer = new FileTransfer();
-    var d_url = base_url+"/upload";
-    var uri = encodeURI(d_url+"/"+fname);
-    var fileURL =  "///storage/emulated/0/DCIM/"+fname;
-
-    fileTransfer.download(
-        uri, fileURL, function(entry) {
-            console.log("download complete: " + entry.toURL());
-        },
-
-        function(error) {
-            console.log("download error source " + error.source);
-            console.log("download error target " + error.target);
-            console.log("download error code" + error.code);
-            myApp.alert("Download fail");
-        },
-
-        false, {
-            headers: {
-                "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
-            }
-        }
-    );
+function update_student() {
+    var f_name = sessionStorage.getItem("student_sname")+" "+sessionStorage.getItem("student_oname");
+    $$(".student-name").html(f_name);
 }
 
-function openBrowser(fname) {
-    var d_url = base_url+"/upload/"+fname;
-    var target = '_blank';
-    var options = "location = yes"
-    var ref = cordova.InAppBrowser.open(d_url, target, options);
-
-    ref.addEventListener('loadstart', loadstartCallback);
-    ref.addEventListener('loadstop', loadstopCallback);
-    ref.addEventListener('loadloaderror', loaderrorCallback);
-    ref.addEventListener('exit', exitCallback);
-
-    function loadstartCallback(event) {
-        //console.log('Loading started: '  + event.url)
-    }
-
-    function loadstopCallback(event) {
-        //console.log('Loading finished: ' + event.url)
-    }
-
-    function loaderrorCallback(error) {
-        //console.log('Loading error: ' + error.message)
-    }
-
-    function exitCallback() {
-        console.log('Browser is closed...')
+function student_login() {
+    var staff = sessionStorage.getItem("matric");
+    if(staff == "" || staff == null){
+        return false;
+    }else{
+        return true;
     }
 }
