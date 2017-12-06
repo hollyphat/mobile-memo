@@ -83,13 +83,3 @@ input::-webkit-inner-spin-button {
     -o-transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
 }
-
-.splash-screen{
-    border: indigo solid 1px;
-    /*margin-top: 4px;
-    margin-left:4px;
-    margin-right:4px;
-    margin-bottom:0px;*/
-    margin-left:4px;
-    margin-right:4px;
-}
