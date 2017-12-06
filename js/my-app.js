@@ -923,6 +923,119 @@ myApp.onPageInit('profile',function () {
        $$(".soname").html(sessionStorage.getItem("staff_oname"));
        $$(".semail").html(sessionStorage.getItem("staff_email"));
        $$(".slevel").html(sessionStorage.getItem("staff_level"));
+
+       $("#sprofile_sname").val(sessionStorage.getItem("staff_sname"));
+       $("#sprofile_oname").val(sessionStorage.getItem("staff_oname"));
+       $("#sprofile_matric").val(sessionStorage.getItem("staff_id"));
+       $("#sprofile_email").val(sessionStorage.getItem("staff_email"));
+       $("#sstudent_level").val(sessionStorage.getItem("staff_level"));
+
+
+       $$("#staff-update-form").on('submit',function (e) {
+           e.preventDefault();
+
+           var profile_sname = $$("#sprofile_sname").val();
+           var profile_oname = $$("#sprofile_oname").val();
+           var profile_email = $$("#sprofile_email").val();
+
+           var level = $$("#sstudent_level").val();
+
+           myApp.showPreloader("Updating profile,<br/>Please Wait...");
+
+           $$.ajax({
+               url: url,
+               data: {
+                   'update_staff_profile': '',
+                   'sname' : profile_sname,
+                   'oname' : profile_oname,
+                   'email' : profile_email,
+                   'level' : level,
+                   'staff_id' : sessionStorage.getItem("staff_id")
+               },
+               type: 'POST',
+               dataType: 'json',
+               crossDomain : true,
+               cache: false,
+               success:function(f){
+                   var ok = f.ok;
+                   if(ok == 1){
+
+                       sessionStorage.setItem("staff_sname",profile_sname);
+                       sessionStorage.setItem("staff_oname",profile_oname);
+                       sessionStorage.setItem("staff_email",profile_email);
+                       sessionStorage.setItem("staff_level",level);
+                       //update_stat();
+                       myApp.hidePreloader();
+                       show_toast(f.msg,"green");
+                   }else {
+                       myApp.hidePreloader();
+
+
+
+                       show_toast("Unable to update profile","red");
+
+
+                   }
+               },
+               error:function(err){
+                   console.log(err.responseText);
+                   myApp.hidePreloader();
+                   myApp.alert("Network error, try again");
+               },
+               timeout: 60000
+           });
+       });
+
+
+
+       $$("#staff-password-form").on('submit',function (e) {
+           e.preventDefault();
+
+           var pass = $$("#spassword").val();
+           var c_pass = $$("#sconfirm_password").val();
+
+           if(pass !== c_pass){
+               myApp.alert("Password does not match");
+               return false;
+           }
+           myApp.showPreloader("Updating password,<br/>Please Wait...");
+
+           $$.ajax({
+               url: url,
+               data: {
+                   'update_staff_password': '',
+                   'password' : pass,
+                   'staff_id' : sessionStorage.getItem("staff_id")
+               },
+               type: 'POST',
+               dataType: 'json',
+               crossDomain : true,
+               cache: false,
+               success:function(f){
+                   var ok = f.ok;
+                   if(ok == 1){
+                       myApp.hidePreloader();
+                       show_toast(f.msg,"green");
+                       $("#spassword").val('');
+                       $("#sconfirm_password").val('');
+                   }else {
+                       myApp.hidePreloader();
+
+                       show_toast('Unable to update password',"red");
+
+
+                   }
+               },
+               error:function(err){
+                   console.log(err.responseText);
+                   myApp.hidePreloader();
+                   myApp.alert("Network error, try again");
+               },
+               timeout: 60000
+           });
+       });
+
+
        $$(".staff-page").removeClass('hide');
    } else if(student_login()){
        update_student();
@@ -932,6 +1045,112 @@ myApp.onPageInit('profile',function () {
        $$(".oname").html(sessionStorage.getItem("student_oname"));
        $$(".email").html(sessionStorage.getItem("student_email"));
        $$(".level").html(sessionStorage.getItem("student_level"));
+
+
+       $("#profile_sname").val(sessionStorage.getItem("student_sname"));
+       $("#profile_oname").val(sessionStorage.getItem("student_oname"));
+       $("#profile_matric").val(sessionStorage.getItem("matric"));
+       $("#profile_email").val(sessionStorage.getItem("student_email"));
+       $("#student_level").val(sessionStorage.getItem("student_level"));
+
+
+       $$("#stu-update-form").on('submit',function (e) {
+           e.preventDefault();
+
+           var profile_sname = $$("#profile_sname").val();
+           var profile_oname = $$("#profile_oname").val();
+           var profile_email = $$("#profile_email").val();
+
+           var level = $$("#student_level").val();
+
+           myApp.showPreloader("Updating profile,<br/>Please Wait...");
+
+           $$.ajax({
+               url: url,
+               data: {
+                   'update_stu_profile': '',
+                   'sname' : profile_sname,
+                   'oname' : profile_oname,
+                   'email' : profile_email,
+                   'level' : level,
+                   'matric' : sessionStorage.getItem("matric")
+               },
+               type: 'POST',
+               dataType: 'json',
+               crossDomain : true,
+               cache: false,
+               success:function(f){
+                   var ok = f.ok;
+                   if(ok == 1){
+
+                       sessionStorage.setItem("student_sname",profile_sname);
+                       sessionStorage.setItem("student_oname",profile_oname);
+                       sessionStorage.setItem("student_email",profile_email);
+                       sessionStorage.setItem("student_level",level);
+                       //update_stat();
+                       myApp.hidePreloader();
+                       show_toast(f.msg,"green");
+                   }else {
+                       myApp.hidePreloader();
+                       show_toast("Unable to update profile","red");
+                   }
+               },
+               error:function(err){
+                   console.log(err.responseText);
+                   myApp.hidePreloader();
+                   myApp.alert("Network error, try again");
+               },
+               timeout: 60000
+           });
+       });
+
+
+       $$("#stu-password-form").on('submit',function (e) {
+           e.preventDefault();
+
+           var pass = $$("#password").val();
+           var c_pass = $$("#confirm_password").val();
+
+           if(pass !== c_pass){
+               myApp.alert("Password does not match");
+               return false;
+           }
+           myApp.showPreloader("Updating password,<br/>Please Wait...");
+
+           $$.ajax({
+               url: url,
+               data: {
+                   'update_stu_password': '',
+                   'password' : pass,
+                   'matric' : sessionStorage.getItem("matric")
+               },
+               type: 'POST',
+               dataType: 'json',
+               crossDomain : true,
+               cache: false,
+               success:function(f){
+                   var ok = f.ok;
+                   if(ok == 1){
+                       myApp.hidePreloader();
+                       show_toast(f.msg,"green");
+                       $("#password").val('');
+                       $("#confirm_password").val('');
+                   }else {
+                       myApp.hidePreloader();
+                       show_toast ('Unable to update password',"red");
+
+                   }
+               },
+               error:function(err){
+                   console.log(err.responseText);
+                   myApp.hidePreloader();
+                   myApp.alert("Network error, try again");
+               },
+               timeout: 60000
+           });
+       });
+
+
        $$(".student-page").removeClass('hide');
    }else{
        window.location = "main.html";
@@ -1011,6 +1230,92 @@ myApp.onPageInit('staff-submitted-assign',function () {
         window.open(file_url);
     });
 });
+
+myApp.onPageInit('stu-password', function (page) {
+
+    $$("#password-forms").on('submit',function(e){
+        e.preventDefault();
+        var pass_matric = $$("#pass_matric").val();
+
+        var pass_email = $$("#pass_email").val();
+        myApp.showPreloader("Resetting Password...");
+
+        $$.ajax({
+            url: url,
+            data: {
+                'stu_pass': '',
+                'matric' : pass_matric,
+                'email': pass_email
+            },
+            type: 'POST',
+            dataType: 'json',
+            crossDomain : true,
+            cache: false,
+            success:function(f){
+                var ok = f.ok;
+                if(ok == 1){
+                    $$("#pass_matric").val('');
+                    $$("#pass_email").val('');
+                }
+                myApp.hidePreloader();
+
+                myApp.addNotification({
+                    message : f.msg
+                });
+            },
+            error:function(err){
+                myApp.hidePreloader();
+                myApp.alert("Network error, try again");
+                console.log(err.responseText);
+            },
+            timeout: 60000
+        });
+    });
+});
+
+myApp.onPageInit('staff-password', function (page) {
+
+    $$("#password-forms").on('submit',function(e){
+        e.preventDefault();
+        var pass_matric = $$("#pass_matric").val();
+
+        var pass_email = $$("#pass_email").val();
+        myApp.showPreloader("Resetting Password...");
+
+        $$.ajax({
+            url: url,
+            data: {
+                'staff_pass': '',
+                'staff_id' : pass_matric,
+                'email': pass_email
+            },
+            type: 'POST',
+            dataType: 'json',
+            crossDomain : true,
+            cache: false,
+            success:function(f){
+                var ok = f.ok;
+                if(ok == 1){
+                    $$("#pass_matric").val('');
+                    $$("#pass_email").val('');
+                }
+                myApp.hidePreloader();
+
+                myApp.addNotification({
+                    message : f.msg
+                });
+            },
+            error:function(err){
+                myApp.hidePreloader();
+                myApp.alert("Network error, try again");
+                console.log(err.responseText);
+            },
+            timeout: 60000
+        });
+    });
+});
+
+
 function update_staff() {
     var f_name = sessionStorage.getItem("staff_sname")+" "+sessionStorage.getItem("staff_oname");
     $$(".staff-name").html(f_name);
