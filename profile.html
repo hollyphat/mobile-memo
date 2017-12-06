@@ -8,7 +8,7 @@
                     <i class="icon icon-back"></i>
                 </a>
             </div>
-            <div class="center">About</div>
+            <div class="center">Profile</div>
         </div>
     </div>
     <div class="page-content">
@@ -50,6 +50,123 @@
                     </table>
                 </div>
             </div>
+
+
+            <div class="list-block">
+                <div class="card">
+                    <div class="card-header">Update Profile</div>
+                    <div class="card-content">
+                        <div class="card-content-inner">
+                            <form action="" method="post" role="form" id="stu-update-form">
+                                <div class="list-block inputs-list">
+                                    <ul>
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label">Matric No</div>
+                                                <div class="item-input">
+                                                    <input type="text" disabled required="" name="reg_matric" id="profile_matric" placeholder="Matric No"/>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label">Surname</div>
+                                                <div class="item-input">
+                                                    <input type="text" autocomplete="off" required="" name="reg_name" id="profile_sname" placeholder="Full Name"/>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label">Other Name</div>
+                                                <div class="item-input">
+                                                    <input type="text" autocomplete="off" required="" name="reg_name" id="profile_oname" placeholder="Full Name"/>
+                                                </div>
+                                            </div>
+                                        </li>
+
+
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label">Level</div>
+                                                <div class="item-input">
+                                                    <select name="student_level" class="levels smart_1" id="student_level">
+                                                        <option value="ND 1">ND 1</option>
+                                                        <option value="ND 2">ND 2</option>
+                                                        <option value="YR 1">YR 1</option>
+                                                        <option value="YR 2">YR 2</option>
+                                                        <option value="YR 3">YR 3</option>
+                                                        <option value="HND 1">HND 1</option>
+                                                        <option value="HND 2">HND 2</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </li>
+
+
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label">Email Address</div>
+                                                <div class="item-input">
+                                                    <input type="email"  autocomplete="off" required="" name="email" id="profile_email" placeholder="Email Address"/>
+                                                </div>
+                                            </div>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                                <div class="content-block">
+                                    <input type="submit" name="update_ok" class="button button-fill button-raised" value="Update">
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        &nbsp;
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="card-header">Update Password</div>
+                    <div class="card-content">
+                        <div class="card-content-inner">
+                            <form action="" method="post" role="form" id="stu-password-form">
+                                <div class="list-block inputs-list">
+                                    <ul>
+
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label">Password</div>
+                                                <div class="item-input">
+                                                    <input type="password" required="" name="reg_password" id="password" placeholder="Password"/>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label">Confirm Password</div>
+                                                <div class="item-input">
+                                                    <input type="password" required="" name="reg_password_2" id="confirm_password" placeholder="Confirm Password"/>
+                                                </div>
+                                            </div>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                                <div class="content-block">
+                                    <input type="submit" name="update_pass" class="button button-fill button-raised" value="Update">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-footer">&nbsp;</div>
+                </div>
+            </div>
         </div>
 
         <div class="staff-page hide">
@@ -86,6 +203,124 @@
                             </td>
                         </tr>
                     </table>
+                </div>
+            </div>
+
+
+            <div class="list-block">
+                <div class="card">
+                    <div class="card-header">Update Profile</div>
+                    <div class="card-content">
+                        <div class="card-content-inner">
+                            <form action="" method="post" role="form" id="staff-update-form">
+                                <div class="list-block inputs-list">
+                                    <ul>
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label">Staff Id</div>
+                                                <div class="item-input">
+                                                    <input type="text" disabled required="" name="reg_matric" id="sprofile_matric" placeholder="Staff Id"/>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label">Surname</div>
+                                                <div class="item-input">
+                                                    <input type="text" autocomplete="off" required="" name="reg_name" id="sprofile_sname" placeholder="Surname"/>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label">Other Name</div>
+                                                <div class="item-input">
+                                                    <input type="text" autocomplete="off" required="" name="reg_name" id="sprofile_oname" placeholder="Other Name"/>
+                                                </div>
+                                            </div>
+                                        </li>
+
+
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label">Level</div>
+                                                <div class="item-input">
+                                                    <select name="student_level" class="levels smart_1" id="sstudent_level">
+                                                        <option value="ASSIST. LECTURER">ASSIST. LECTURER</option>
+                                                        <option value="LECTURER I">LECTURER I</option>
+                                                        <option value="LECTURER II">LECTURER II</option>
+                                                        <option value="LECTURER III">LECTURER III</option>
+                                                        <option value="TECHNOLOGIST">TECHNOLOGIST</option>
+                                                        <option value="SENIOR LECTURER">SENIOR LECTURER</option>
+                                                        <option value="PRINCIPAL LECTURER">PRINCIPAL LECTURER</option>
+                                                        <option value="CHIEF LECTURER">CHIEF LECTURER</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </li>
+
+
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label">Email Address</div>
+                                                <div class="item-input">
+                                                    <input type="email"  autocomplete="off" required="" name="email" id="sprofile_email" placeholder="Email Address"/>
+                                                </div>
+                                            </div>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                                <div class="content-block">
+                                    <input type="submit" name="update_ok" class="button button-fill button-raised" value="Update">
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        &nbsp;
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="card-header">Update Password</div>
+                    <div class="card-content">
+                        <div class="card-content-inner">
+                            <form action="" method="post" role="form" id="staff-password-form">
+                                <div class="list-block inputs-list">
+                                    <ul>
+
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label">Password</div>
+                                                <div class="item-input">
+                                                    <input type="password" required="" name="reg_password" id="spassword" placeholder="Password"/>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label">Confirm Password</div>
+                                                <div class="item-input">
+                                                    <input type="password" required="" name="reg_password_2" id="sconfirm_password" placeholder="Confirm Password"/>
+                                                </div>
+                                            </div>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                                <div class="content-block">
+                                    <input type="submit" name="update_pass" class="button button-fill button-raised" value="Update">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-footer">&nbsp;</div>
                 </div>
             </div>
         </div>
