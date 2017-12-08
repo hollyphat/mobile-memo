@@ -17,7 +17,7 @@ var mainView = myApp.addView('.view-main', {
 
 // Callbacks to run specific code for specific pages, for example for About page:
 myApp.onPageInit('main-page-2', function (page) {
-    window.screen.unlock();
+    
     //var s_id = sessionStorage.getItem("staff_id");
     if(staff_login()){
         $$("#staff-home").click();
@@ -152,7 +152,7 @@ myApp.onPageInit('main-page-2', function (page) {
 //act-btn
 
 myApp.onPageInit('staff-reg',function () {
-    window.screen.unlock();
+    
    //console.log("Hello");
     $$("#staff-register-form").on("submit",function (e) {
        e.preventDefault();
@@ -208,7 +208,7 @@ myApp.onPageInit('staff-reg',function () {
 
 
 myApp.onPageInit('student-reg',function () {
-    window.screen.unlock();
+    
     //console.log("Hello");
     $$("#register-form").on("submit",function (e) {
         e.preventDefault();
@@ -263,7 +263,7 @@ myApp.onPageInit('student-reg',function () {
 });
 
 myApp.onPageInit('staff-home',function () {
-    window.screen.unlock();
+    
     if(!staff_login()){
         window.location = "main.html";
     }
@@ -281,7 +281,7 @@ myApp.onPageInit('staff-home',function () {
 
 
 myApp.onPageInit('student-home',function () {
-    window.screen.unlock();
+    
     if(!student_login()){
         window.location = "main.html";
     }
@@ -298,7 +298,7 @@ myApp.onPageInit('student-home',function () {
 });
 
 myApp.onPageInit('staff-pub-course',function () {
-    window.screen.unlock();
+    
     if(!staff_login()){
         window.location = "main.html";
     }
@@ -361,7 +361,7 @@ myApp.onPageInit('staff-pub-course',function () {
 
 
 myApp.onPageInit('staff-pub-outline',function () {
-    window.screen.unlock();
+    
     if(!staff_login()){
         window.location = "main.html";
     }
@@ -423,7 +423,7 @@ myApp.onPageInit('staff-pub-outline',function () {
 
 
 myApp.onPageInit('staff-pub-assign',function () {
-    window.screen.unlock();
+    
     if(!staff_login()){
         window.location = "main.html";
     }
@@ -496,7 +496,7 @@ myApp.onPageInit('view-staff-material',function () {
         window.location = "main.html";
     }
 
-    window.screen.orientation.lock('landscape');
+    
     update_staff();
 
     myApp.showIndicator();
@@ -561,7 +561,7 @@ myApp.onPageInit('view-student-material',function () {
         window.location = "main.html";
     }
 
-    window.screen.orientation.lock('landscape');
+    
     update_student();
 
     myApp.showIndicator();
@@ -624,7 +624,7 @@ myApp.onPageInit('view-staff-outline',function () {
     if(!staff_login()){
         window.location = "main.html";
     }
-    window.screen.orientation.lock('landscape');
+    
     update_staff();
 
     myApp.showIndicator();
@@ -688,7 +688,7 @@ myApp.onPageInit('view-student-outline',function () {
         window.location = "main.html";
     }
 
-    window.screen.orientation.lock('landscape');
+    
     update_student();
 
     myApp.showIndicator();
@@ -750,7 +750,7 @@ myApp.onPageInit('view-staff-assign',function () {
         window.location = "main.html";
     }
 
-    window.screen.orientation.lock('landscape');
+    
     update_staff();
 
     myApp.showIndicator();
@@ -809,7 +809,7 @@ myApp.onPageInit('view-student-assign',function () {
     if(!student_login()){
         window.location = "main.html";
     }
-    window.screen.orientation.lock('landscape');
+    
     update_student();
 
     myApp.showIndicator();
@@ -867,7 +867,7 @@ myApp.onPageInit('student-assign-submit',function () {
    if(!student_login()){
        window.location = "main.html";
    }
-   window.screen.unlock();
+   
 
    update_student();
     var assign_id = sessionStorage.getItem("assign_id");
@@ -935,7 +935,7 @@ myApp.onPageInit('student-assign-submit',function () {
 
 
 myApp.onPageInit('profile',function () {
-    window.screen.unlock();
+    
    if(staff_login()){
        update_staff();
        $$(".staff_id").html(sessionStorage.getItem("staff_id"));
@@ -1181,7 +1181,7 @@ myApp.onPageInit('staff-submitted-assign',function () {
    if(!staff_login()){
        window.location = "main.html";
    }
-    window.screen.orientation.lock('landscape');
+    
 
    update_staff();
 
@@ -1253,7 +1253,7 @@ myApp.onPageInit('staff-submitted-assign',function () {
 });
 
 myApp.onPageInit('stu-password', function (page) {
-    window.screen.unlock();
+    
     $$("#password-forms").on('submit',function(e){
         e.preventDefault();
         var pass_matric = $$("#pass_matric").val();
@@ -1295,7 +1295,7 @@ myApp.onPageInit('stu-password', function (page) {
 });
 
 myApp.onPageInit('staff-password', function (page) {
-    window.screen.unlock();
+    
     $$("#password-forms").on('submit',function(e){
         e.preventDefault();
         var pass_matric = $$("#pass_matric").val();
